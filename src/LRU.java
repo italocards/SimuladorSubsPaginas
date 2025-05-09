@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class LRU {
-
     public static int calcularFaltas(int[] paginas, int quadros) {
         ArrayList<Integer> memoria = new ArrayList<>();
         HashMap<Integer, Integer> ultimoAcesso = new HashMap<>();
@@ -10,12 +9,9 @@ public class LRU {
         int faltas = 0;
 
         for (int pagina : paginas) {
-            ultimoAcesso.put(pagina, tempo++);
-
             if (!memoria.contains(pagina)) {
                 faltas++;
 
-                //logica
                 if (memoria.size() == quadros) {
                     int paginaRemover = memoria.get(0);
                     int menorTempo = ultimoAcesso.get(paginaRemover);
@@ -30,9 +26,11 @@ public class LRU {
                     memoria.remove((Integer) paginaRemover);
                 }
 
-
                 memoria.add(pagina);
             }
+
+            // Atualiza o tempo de acesso após garantir que a página está na memória
+            ultimoAcesso.put(pagina, tempo++);
         }
 
         return faltas;
